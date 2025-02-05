@@ -286,6 +286,19 @@
 
     $(document).ready(function() {
 
+        
+        $(document).on("keyup", function(event) {
+            if (event.key === "ArrowRight") {
+                $(".score2").trigger("click"); // Simulates a click on .score2
+            }
+        });
+
+        $(document).on("keyup", function(event) {
+            if (event.key === "ArrowLeft") {
+                $(".score1").trigger("click"); // Simulates a click on .score2
+            }
+        });
+        
         $('.btn.newGame').on('click', function(){
             resetirajPoene();
             resetirajSetove();
