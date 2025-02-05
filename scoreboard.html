@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            color: white;
+            font-size: 48px
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+        }
+
+        .row1 {
+            flex-basis: 10%;
+            flex-grow: 0;
+        }
+
+        .row3 {
+            flex-basis: 10%;
+            flex-grow: 0;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            background-color: darkgray;
+        }
+
+        .row>div {
+            flex: 1;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .border_bottom {
+            border-bottom: 3px solid black;
+        }
+
+        .btn {
+            height: 80%;
+            align-items: center;
+            min-width: 5%;
+            font-size: 0.7rem;
+            background-color: gray;
+            color: white;
+        }
+
+        .red.player1 {
+            position: relative;
+            text-align: left;
+            padding: 1rem;
+        }
+
+        .blue.player2 {
+            position: relative;
+            text-align: right;
+            padding: 1rem;
+        }
+
+        .red.tim1 {
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+            padding: 0.5rem;
+        }
+
+        .blue.tim2 {
+            display: flex;
+            justify-content: space-between;
+            text-align: right;
+            padding: 0.5rem;
+        }
+
+        .score {
+            user-select: none; /* Prevent text selection */
+            cursor: pointer;
+        }
+
+        .score1, .score2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            padding: 6rem;
+        }
+
+        .name1, .name2 {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .obrnut {
+            order: -1;
+        }
+
+        .name1.obrnut #player1Set {
+            order: -1; /* Postavi set ispred imena */
+        }
+
+        .name1.obrnut #player1Name {
+            order: 1; /* Postavi ime iza seta */
+        }
+
+        .name2.obrnut #player2Set {
+            order: 1; /* Postavi set iza imena */
+        }
+
+        .name2.obrnut #player2Name {
+            order: -1; /* Postavi ime ispred seta */
+        }
+
+        .dropdown {
+            appearance: none; /* Remove default dropdown styling */
+            background: none;
+            border: none;
+            color: inherit; /* Match the color of the parent */
+            font-size: inherit;
+            padding: 0;
+            margin: 0;
+            cursor: pointer; /* Show pointer cursor on hover */
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .dropdown:focus {
+            outline: none; /* Remove focus outline */
+        }
+
+        .dropdown option {
+            background-color: white; /* Style dropdown options */
+            color: black;
+        }
+
+        .reverse {
+            flex-direction: row-reverse;
+        }
+
+        #player1Set , #player2Set{
+            font-size: 1.5rem;
+        }
+
+        #team1Score, #team2Score{
+            font-size: 2rem;
+        }   
+
+        .gold {
+            color: gold;
+        }
+        
+        @media (max-width: 1280px) {
+            .dropdown {
+                font-size: 14px; /* Slightly smaller font size */
+                max-width: 200px; /* Limit the width of the dropdown */
+                overflow: hidden; /* Prevent overflow */
+                text-overflow: ellipsis; /* Add ellipsis for long names */
+                white-space: nowrap; /* Prevent wrapping */
+            }
+
+            .dropdown option {
+                font-size: 12px; /* Reduce option font size for dropdown */
+            }
+
+            .container {
+                padding: 0; /* Add padding to prevent edge collisions */
+            }
+
+            .score {
+                font-size: 4rem; /* Adjust score font size for balance */
+                padding: 0.1rem;
+            }
+
+            .red.player1 {
+                padding: 0.2rem;
+            }
+
+            .blue.player2 {
+                padding: 0.2rem;
+            }
+
+            #player1Set , #player2Set{
+                font-size: 0.8rem;
+            }
+
+            #team1Score, #team2Score{
+                font-size: 1rem;
+            }   
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row row1 border_bottom">
+            <div class="red tim1">
+                <select id="team1Name" class="dropdown left">
+                    <option value="0" selected>-</option>
+                    <option value="stkzagreb">STK Zagreb</option>
+                    <option value="starr">Starr</option>
+                    <option value="gstkzagreb">GSTK Zagreb</option>
+                    <option value="pula">Pula</option>
+                    <option value="pozega">Požega</option>
+                    <option value="osijek">Vodovod</option>
+                    <option value="marathon">Marathon</option>
+                    <option value="split">Split</option>
+                    <option value="rakuni">Rakuni</option>
+                    <option value="donat">Donat</option>
+                    <option value="velikagorica">Velika Gorica</option>
+                </select>
+                <span id="team1Score" class="gold">0</span>
+            </div>
+            <div class="blue tim2"><span id="team2Score" class="gold">0</span>
+                <select id="team2Name" class="dropdown right">
+                    <option value="stklibertas" selected>STK Libertas Marinkolor</option>
+                    <option value="stklibertas2" >STK Libertas Marinkolor 2</option>
+                    <option value="stklibertas3" >STK Libertas Marinkolor 3</option>
+                </select>
+            </div>
+        </div>
+        <div class="row row2 border_bottom">
+            <div class="red player1">
+                <div class="name1">
+                    <select id="player1Name" class="dropdown player left">
+                        <option value="AI" selected>Igrač 1</option>
+                        <option value="Team X">Igrač 2</option>
+                        <option value="Team Y">Igrač 3</option>
+                    </select>
+                    <span id="player1Set">0</span></div> 
+                <div class="score score1">0</div>
+            </div>
+            <div class="blue player2">
+                <div class="name2">
+                    <span id="player2Set">0</span>
+                    <select id="player2Name" class="dropdown player right">
+                        <option value="AI" selected>M. Simović</option>
+                        <option value="Team X">F. Čipin</option>
+                        <option value="Team Y">T. Japec</option>
+                    </select>    
+                </div> 
+                <div class="score score2">0</div>
+            </div>
+        </div>
+        <div class="row row3">
+            <button class="btn minusPlayer1">-1</button>
+            <button class="btn newGame">Nova igra</button>
+            <button class="btn minusPlayer2">-1</button>
+        </div>
+    </div>
+    <script>
+
+    $(document).ready(function() {
+
+        $('.btn.newGame').on('click', function(){
+            resetirajPoene();
+            resetirajSetove();
+            resetirajMeceve();
+            resetirajPozicije();
+        });
+
+        $('.minusPlayer1').on('click', function(){
+            let score1 = parseInt($('.score1').text());
+            if(score1 > 0){
+                $('.score1').text(score1-1);
+            }
+        });
+
+        $('.minusPlayer2').on('click', function(){
+            let score2 = parseInt($('.score2').text());
+            if(score2 > 0){
+                $('.score2').text(score2-1);
+            }
+        });
+
+        $('.score').click(function() {
+            let currentScore = parseInt($(this).text());
+            $(this).text(currentScore + 1);
+            provjeriRezultat();
+        });
+
+        const provjeriRezultat = () => {
+            let score1 = parseInt($('.score1').text());
+            let score2 = parseInt($('.score2').text());
+
+            if(score1 > 11 || score2 > 11){
+                if(score1-score2 > 2){
+                    povecajSet(1)
+                    resetirajPoene();
+                    provjeriSetove();
+                } else if (score2-score1 > 2){
+                    povecajSet(2);
+                    resetirajPoene();
+                    provjeriSetove();
+                }
+            }
+        }
+
+        const provjeriSetove = () => {
+            let set1 = parseInt($('#player1Set').text());
+            let set2 = parseInt($('#player2Set').text());
+            if(set1 == 3){
+                povecajMec(1);
+                resetirajSetove();
+            } else if(set2 == 3){
+                povecajMec(2);
+                resetirajSetove();
+            }
+        }
+
+        const povecajSet = (igrac) => {
+            $('#player'+igrac+'Set').text(parseInt($('#player'+igrac+'Set').text()) + 1);
+            if($('#player'+igrac+'Set').text() != '3'){
+                ZamijeniMjesta();
+            }
+        }
+
+        const povecajMec = (tim) => {
+            $('#team'+tim+'Score').text(parseInt($('#team'+tim+'Score').text()) + 1);
+            resetirajPozicije();
+        }
+
+        const ZamijeniMjesta = () => {
+            // Obrni mjesta igrača i rasporeda imena igrača i setova i buttonima
+            $('.blue.player2').toggleClass('obrnut');
+            $('.name1').toggleClass('reverse');
+            $('.name2').toggleClass('reverse');
+            $(".row3").toggleClass('reverse');
+
+            var leftElement = $('.player.left');
+            var rightElement = $('.player.right');
+
+            // Zamijeni mjesta klasama kako bi se pravilno alignala imena igrača
+            leftElement.removeClass('left').addClass('right');
+            rightElement.removeClass('right').addClass('left');
+
+        }
+
+        const resetirajPoene = () => {
+            $('.score1').text(0);
+            $('.score2').text(0);
+        }
+
+        const resetirajSetove = () => {
+            $('#player1Set').text(0);
+            $('#player2Set').text(0);
+        }
+
+        const resetirajMeceve = () => {
+            $('#team1Score').text(0);
+            $('#team2Score').text(0);
+        }
+
+        const resetirajPozicije = () => {
+            $('.blue.player2').removeClass('obrnut');
+            $('.name1').removeClass('reverse');
+            $('.name2').removeClass('reverse');
+            $(".row3").removeClass('reverse');
+        }
+
+        const players = {
+            'gstkzagreb': [
+                'Benko',
+                'Hencl',
+                'Borovnjak'
+            ],
+            'stkzagreb': [
+                'Zlatkov',
+                'Petek',
+                'Marjanović',
+                'Kolarek'
+            ],
+            'pula': [
+                'Krstevski',
+                'Chen',
+                'Runjić'
+            ],
+            'starr' : [
+                'Srivastava',
+                'Ređep',
+                'Gromek',
+                'Vidan',
+                'Šantek'
+            ],
+            'stklibertas' : [
+                'Simović',
+                'Čipin',
+                'Japec'
+            ],
+            'stklibertas2' : [
+                'Mikulić',
+                'Venier',
+                'Mileusnić',
+                'Đurđević'
+            ],
+            'stklibertas3' : [
+                'Jupek',
+                'Obrovac',
+                'Lukačević',
+                'Karanović'
+            ],
+            'pozega' : [
+                'Maglić',
+                'Mustapić',
+                'Islamović',
+                'Dujmović'
+            ],
+            'osijek' : [
+                'Banek',
+                'Lozušić',
+                'Znika'
+            ],
+            'marathon' : [
+                'Tošić',
+                'Mihaljević',
+                'Nemec',
+                'Jalžabetić'
+            ],
+            'velikagorica' : [
+                'Valois Da Silva',
+                'Habijanec',
+                'Elger',
+                'Jakić'
+            ],
+            'rakuni' : [
+                'Jakelić',
+                'Jerković',
+                'Kaleb'
+            ],
+            'split' : [
+                'Bakač',
+                'D. Zeljko',
+                'I. Zeljko'
+            ],
+            'donat' : [
+                'Mijatović',
+                'Zubčić',
+                'Kurilić',
+                'Karlović',
+            ]
+
+
+
+        };
+
+        $("#team1Name").on('change', function(){
+            let tim = $(this).val();
+            let teamPlayers = players[tim];
+
+            // Clear the existing options in #player1Name
+            $('#player1Name').empty();
+
+            // Add a default option for "Igrač 1"
+            $('#player1Name').append('<option value="0" selected>-</option>');
+
+            // Dynamically add players to the select dropdown
+            teamPlayers.forEach(function(player, index) {
+                $('#player1Name').append('<option value="' + index + '">' + player + '</option>');
+            });
+        });
+
+        $("#team2Name").on('change', function(){
+            let tim = $(this).val();
+            let teamPlayers = players[tim];
+
+            // Clear the existing options in #player2Name
+            $('#player2Name').empty();
+
+            // Add a default option for "Igrač 2"
+            $('#player2Name').append('<option value="0" selected>-</option>');
+
+            // Dynamically add players to the select dropdown
+            teamPlayers.forEach(function(player, index) {
+                $('#player2Name').append('<option value="' + index + '">' + player + '</option>');
+            });
+        });
+
+
+    });
+    </script>
+</body>
+
+</html>
