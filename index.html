@@ -285,17 +285,25 @@
     <script>
 
     $(document).ready(function() {
-
         
+        let firstPosition = true;
         $(document).on("keyup", function(event) {
             if (event.key === "ArrowRight") {
-                $(".score2").trigger("click"); // Simulates a click on .score2
+                if(firstPosition){
+                    $(".score2").trigger("click"); // Simulates a click on .score2
+                } else {
+                    $(".score1").trigger("click"); // Simulates a click on .score2
+                }
             }
         });
 
         $(document).on("keyup", function(event) {
             if (event.key === "ArrowLeft") {
-                $(".score1").trigger("click"); // Simulates a click on .score2
+                if(firstPosition){
+                    $(".score1").trigger("click"); // Simulates a click on .score2
+                } else {
+                    $(".score2").trigger("click"); // Simulates a click on .score2
+                }
             }
         });
         
@@ -380,6 +388,7 @@
             // Zamijeni mjesta klasama kako bi se pravilno alignala imena igrača
             leftElement.removeClass('left').addClass('right');
             rightElement.removeClass('right').addClass('left');
+            firstPosition = !firstPosition;
 
         }
 
@@ -403,6 +412,7 @@
             $('.name1').removeClass('reverse');
             $('.name2').removeClass('reverse');
             $(".row3").removeClass('reverse');
+            firstPosition = true;
         }
 
         const players = {
