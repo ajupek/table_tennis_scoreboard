@@ -344,14 +344,19 @@
                     povecajSet(1)
                     resetirajPoene();
                     provjeriSetove();
+                    score1 = 0;
+                    score2 = 0;
                 } else if (score2-score1 > 2){
                     povecajSet(2);
                     resetirajPoene();
                     provjeriSetove();
+                    score1 = 0;
+                    score2 = 0;
                 }
-
                 
-            } else if(score2-score1 > 1 && score2 > 10) {
+            } 
+            
+            if(score2-score1 > 1 && score2 > 10) {
                     startConfetti();
             }
 
