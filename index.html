@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scoreboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
     <style>
         html,
         body {
@@ -348,7 +349,12 @@
                     resetirajPoene();
                     provjeriSetove();
                 }
+
+                
+            } else if(score2-score1 > 1 && score2 > 10) {
+                    startConfetti();
             }
+
         }
 
         const provjeriSetove = () => {
@@ -531,6 +537,26 @@
                 $('#player2Name').append('<option value="' + index + '">' + player + '</option>');
             });
         });
+
+        const startConfetti = () => {
+            var duration = 4 * 1000; // Confetti duration (2 seconds)
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 7, // Number of confetti pieces
+                    spread: 120, // Spread area
+                    startVelocity: 50, // Speed of confetti
+                    ticks: 70, // Duration of each confetti burst
+                    scalar: 2, // Increase the size (default is 1, try 2 or higher)
+                    origin: { x: Math.random(), y: Math.random() * 0.9 } // Randomize start positions
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        };
 
 
     });
