@@ -456,6 +456,12 @@
             $('.name2').removeClass('reverse');
             $(".row3").removeClass('reverse');
             firstPosition = true;
+
+            var leftElement = $('#player1Name');
+            var rightElement = $('#player2Name');
+
+            leftElement.removeClass('right').addClass('left');
+            rightElement.removeClass('left').addClass('right');
         }
 
         const players = {
