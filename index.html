@@ -14,17 +14,22 @@
             padding: 0;
             height: 100%;
             color: white;
-            font-size: 48px
+            font-size: 48px;
         }
 
         body {
             display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: center;
             justify-content: center;
+            -webkit-align-items: center;
             align-items: center;
         }
 
         .container {
             display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: column;
             flex-direction: column;
             height: 100%;
             width: 100%;
@@ -32,25 +37,36 @@
 
         .row {
             display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: row;
             flex-direction: row;
+            -webkit-flex: 1;
             flex: 1;
         }
 
         .row1 {
+            -webkit-flex-basis: 10%;
             flex-basis: 10%;
+            -webkit-flex-grow: 0;
             flex-grow: 0;
         }
 
         .row3 {
+            -webkit-flex-basis: 10%;
             flex-basis: 10%;
+            -webkit-flex-grow: 0;
             flex-grow: 0;
+            -webkit-justify-content: center;
             justify-content: center;
+            -webkit-align-items: center;
             align-items: center;
+            -webkit-gap: 2rem;
             gap: 2rem;
             background-color: darkgray;
         }
 
-        .row>div {
+        .row > div {
+            -webkit-flex: 1;
             flex: 1;
         }
 
@@ -68,6 +84,7 @@
 
         .btn {
             height: 80%;
+            -webkit-align-items: center;
             align-items: center;
             min-width: 5%;
             font-size: 0.7rem;
@@ -89,6 +106,8 @@
 
         .red.tim1 {
             display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: space-between;
             justify-content: space-between;
             text-align: left;
             padding: 0.5rem;
@@ -96,6 +115,8 @@
 
         .blue.tim2 {
             display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: space-between;
             justify-content: space-between;
             text-align: right;
             padding: 0.5rem;
@@ -110,6 +131,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
+            -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
             font-size: 5rem;
             padding: 6rem;
@@ -117,30 +139,38 @@
 
         .name1, .name2 {
             display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: space-between;
             justify-content: space-between;
         }
 
         .obrnut {
+            -webkit-order: -1;
             order: -1;
         }
 
         .name1.obrnut #player1Set {
+            -webkit-order: -1;
             order: -1; /* Postavi set ispred imena */
         }
 
         .name1.obrnut #player1Name {
+            -webkit-order: 1;
             order: 1; /* Postavi ime iza seta */
         }
 
         .name2.obrnut #player2Set {
+            -webkit-order: 1;
             order: 1; /* Postavi set iza imena */
         }
 
         .name2.obrnut #player2Name {
+            -webkit-order: -1;
             order: -1; /* Postavi ime ispred seta */
         }
 
         .dropdown {
+            -webkit-appearance: none;
             appearance: none; /* Remove default dropdown styling */
             background: none;
             border: none;
@@ -169,21 +199,22 @@
         }
 
         .reverse {
+            -webkit-flex-direction: row-reverse;
             flex-direction: row-reverse;
         }
 
-        #player1Set , #player2Set{
+        #player1Set, #player2Set {
             font-size: 1.5rem;
         }
 
-        #team1Score, #team2Score{
+        #team1Score, #team2Score {
             font-size: 2rem;
-        }   
+        }
 
         .gold {
             color: gold;
         }
-        
+
         @media (max-width: 1280px) {
             .dropdown {
                 font-size: 14px; /* Slightly smaller font size */
@@ -214,14 +245,15 @@
                 padding: 0.2rem;
             }
 
-            #player1Set , #player2Set{
+            #player1Set, #player2Set {
                 font-size: 0.8rem;
             }
 
-            #team1Score, #team2Score{
+            #team1Score, #team2Score {
                 font-size: 1rem;
-            }   
+            }
         }
+
 
     </style>
 </head>
